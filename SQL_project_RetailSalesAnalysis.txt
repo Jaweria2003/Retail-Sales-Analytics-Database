@@ -1,0 +1,186 @@
+
+MY PROJECT- Retail Sales Analytics Database
+- Analyze trends, customer behavior, and product performance.
+Designed and implemented a relational database to analyze retail business performance, customer behavior, and product trends. Built tables for customers, products, stores, and sales transactions, and performed advanced SQL analysis to extract actionable insights.
+
+Key Contributions:
+
+- Designed normalized schema with 4 core tables: customers, products, stores, and sales.
+
+- Loaded and cleaned retail sales data using SQL Developer.
+
+- Performed analytical queries to identify:
+
+- Top-selling products
+
+- Monthly/Quarterly revenue trends
+
+- High-value customer segments
+
+- Store-wise performance insights
+
+- Used JOINs, CTEs, Aggregate & Window functions for analysis.
+
+- Created views for automated reporting.
+
+Skills Shown: SQL(Joins, Aggregations, CTEs, Window Functions)
+Tools: Oracle SQL Developer
+
+
+--- Customer Table ---
+Create Table customers (
+customer_id Number PRIMARY KEY,
+customer_name VARCHAR(30),
+gender VARCHAR(10),
+city VARCHAR(20),
+state VARCHAR(50)
+);
+
+--- Product Table ---
+Create Table products (
+product_id NUMBER PRIMARY KEY,
+product_name VARCHAR(30),
+category VARCHAR(30),
+price NUMBER(10,2)
+);
+
+--- Stores Table ---
+CREATE TABLE stores (
+store_id NUMBER PRIMARY KEY,
+store_name VARCHAR(30),
+city VARCHAR(20),
+state VARCHAR(30)
+);
+
+--- Sales Table ---
+CREATE TABLE sales (
+sales_id NUMBER PRIMARY KEY,
+customer_id NUMBER references customers(customer_id),
+product_id NUMBER references products(product_id),
+store_id NUMBER references stores(store_id),
+sale_date DATE,
+quantity NUMBER,
+total_amount NUMBER(10,2)
+);
+
+
+
+---- INSERT DATA - CUSTOMERS(25 Rows)
+
+INSERT INTO customers VALUES (1, 'Aarav Sharma', 'Male', 'Mumbai', 'Maharashtra');
+INSERT INTO customers VALUES (2, 'Ishita Patel', 'Female', 'Ahmedabad', 'Gujarat');
+INSERT INTO customers VALUES (3, 'Rohan Mehta', 'Male', 'Delhi', 'Delhi');
+INSERT INTO customers VALUES (4, 'Sneha Reddy', 'Female', 'Hyderabad', 'Telangana');
+INSERT INTO customers VALUES (5, 'Kabir Khanna', 'Male', 'Chandigarh', 'Punjab');
+INSERT INTO customers VALUES (6, 'Pooja Desai', 'Female', 'Surat', 'Gujarat');
+INSERT INTO customers VALUES (7, 'Vikram Singh', 'Male', 'Jaipur', 'Rajasthan');
+INSERT INTO customers VALUES (8, 'Sara Khan', 'Female', 'Lucknow', 'Uttar Pradesh');
+INSERT INTO customers VALUES (9, 'Aditya Verma', 'Male', 'Kolkata', 'West Bengal');
+INSERT INTO customers VALUES (10, 'Meera Joshi', 'Female', 'Pune', 'Maharashtra');
+INSERT INTO customers VALUES (11, 'Aman Gupta', 'Male', 'Delhi', 'Delhi');
+INSERT INTO customers VALUES (12, 'Riya Sen', 'Female', 'Kolkata', 'West Bengal');
+INSERT INTO customers VALUES (13, 'Harsh Yadav', 'Male', 'Bhopal', 'Madhya Pradesh');
+INSERT INTO customers VALUES (14, 'Anjali Nair', 'Female', 'Kochi', 'Kerala');
+INSERT INTO customers VALUES (15, 'Yuvraj Chauhan', 'Male', 'Indore', 'Madhya Pradesh');
+INSERT INTO customers VALUES (16, 'Diya Kapoor', 'Female', 'Mumbai', 'Maharashtra');
+INSERT INTO customers VALUES (17, 'Krish Malhotra', 'Male', 'Nagpur', 'Maharashtra');
+INSERT INTO customers VALUES (18, 'Tanya Arora', 'Female', 'Gurgaon', 'Haryana');
+INSERT INTO customers VALUES (19, 'Dev Patel', 'Male', 'Ahmedabad', 'Gujarat');
+INSERT INTO customers VALUES (20, 'Simran Kaur', 'Female', 'Amritsar', 'Punjab');
+INSERT INTO customers VALUES (21, 'Arnav Sinha', 'Male', 'Patna', 'Bihar');
+INSERT INTO customers VALUES (22, 'Kritika Singh', 'Female', 'Varanasi', 'Uttar Pradesh');
+INSERT INTO customers VALUES (23, 'Neel Rana', 'Male', 'Surat', 'Gujarat');
+INSERT INTO customers VALUES (24, 'Shreya Das', 'Female', 'Bhubaneswar', 'Odisha');
+INSERT INTO customers VALUES (25, 'Jay Thakur', 'Male', 'Nashik', 'Maharashtra');
+
+
+---- INSERT DATA - PRODUCTS(25 Rows)
+
+INSERT INTO products VALUES (1, 'Laptop', 'Electronics', 55000);
+INSERT INTO products VALUES (2, 'Mobile Phone', 'Electronics', 25000);
+INSERT INTO products VALUES (3, 'Headphones', 'Accessories', 1500);
+INSERT INTO products VALUES (4, 'Smart Watch', 'Electronics', 5000);
+INSERT INTO products VALUES (5, 'Bluetooth Speaker', 'Accessories', 3000);
+INSERT INTO products VALUES (6, 'Office Chair', 'Furniture', 4500);
+INSERT INTO products VALUES (7, 'Study Table', 'Furniture', 6500);
+INSERT INTO products VALUES (8, 'LED TV', 'Electronics', 38000);
+INSERT INTO products VALUES (9, 'Microwave Oven', 'Home Appliances', 10000);
+INSERT INTO products VALUES (10, 'Refrigerator', 'Home Appliances', 30000);
+INSERT INTO products VALUES (11, 'Water Bottle', 'Daily Use', 300);
+INSERT INTO products VALUES (12, 'Shoes', 'Fashion', 2000);
+INSERT INTO products VALUES (13, 'Backpack', 'Fashion', 1200);
+INSERT INTO products VALUES (14, 'Notebook', 'Stationery', 60);
+INSERT INTO products VALUES (15, 'Pen Set', 'Stationery', 100);
+INSERT INTO products VALUES (16, 'Air Conditioner', 'Home Appliances', 42000);
+INSERT INTO products VALUES (17, 'Ceiling Fan', 'Home Appliances', 2000);
+INSERT INTO products VALUES (18, 'Printer', 'Electronics', 8000);
+INSERT INTO products VALUES (19, 'Tablet', 'Electronics', 20000);
+INSERT INTO products VALUES (20, 'Wireless Mouse', 'Accessories', 700);
+INSERT INTO products VALUES (21, 'Gaming Keyboard', 'Accessories', 2500);
+INSERT INTO products VALUES (22, 'Sunglasses', 'Fashion', 900);
+INSERT INTO products VALUES (23, 'Handbag', 'Fashion', 1800);
+INSERT INTO products VALUES (24, 'Power Bank', 'Accessories', 1500);
+INSERT INTO products VALUES (25, 'Vacuum Cleaner', 'Home Appliances', 7000);
+
+
+---- INSERT DATA - STORES (10 Rows)
+
+INSERT INTO stores VALUES (1, 'Mumbai Central Store', 'Mumbai', 'Maharashtra');
+INSERT INTO stores VALUES (2, 'Delhi Mega Mart', 'Delhi', 'Delhi');
+INSERT INTO stores VALUES (3, 'Hyderabad Retail Hub', 'Hyderabad', 'Telangana');
+INSERT INTO stores VALUES (4, 'Kolkata Super Store', 'Kolkata', 'West Bengal');
+INSERT INTO stores VALUES (5, 'Bangalore City Mall', 'Bangalore', 'Karnataka');
+INSERT INTO stores VALUES (6, 'Ahmedabad Trade Center', 'Ahmedabad', 'Gujarat');
+INSERT INTO stores VALUES (7, 'Pune Downtown Shop', 'Pune', 'Maharashtra');
+INSERT INTO stores VALUES (8, 'Chennai Retail Point', 'Chennai', 'Tamil Nadu');
+INSERT INTO stores VALUES (9, 'Jaipur Big Bazaar', 'Jaipur', 'Rajasthan');
+INSERT INTO stores VALUES (10, 'Lucknow Smart Store', 'Lucknow', 'Uttar Pradesh');
+
+
+---- INSERT DATA - STORES (25 Rows)
+
+INSERT INTO sales VALUES (1, 1, 1, 1, DATE '2024-01-15', 1, 55000);
+INSERT INTO sales VALUES (2, 2, 3, 2, DATE '2024-01-18', 2, 3000);
+INSERT INTO sales VALUES (3, 3, 2, 3, DATE '2024-02-02', 1, 25000);
+INSERT INTO sales VALUES (4, 4, 4, 4, DATE '2024-02-10', 1, 5000);
+INSERT INTO sales VALUES (5, 5, 5, 5, DATE '2024-02-12', 1, 3000);
+INSERT INTO sales VALUES (6, 6, 7, 1, DATE '2024-03-01', 1, 6500);
+INSERT INTO sales VALUES (7, 7, 6, 2, DATE '2024-03-05', 1, 4500);
+INSERT INTO sales VALUES (8, 8, 8, 3, DATE '2024-03-15', 1, 38000);
+INSERT INTO sales VALUES (9, 9, 9, 4, DATE '2024-03-22', 1, 10000);
+INSERT INTO sales VALUES (10, 10, 10, 5, DATE '2024-03-25', 1, 30000);
+
+INSERT INTO sales VALUES (11, 11, 11, 6, DATE '2024-04-02', 3, 900);
+INSERT INTO sales VALUES (12, 12, 12, 7, DATE '2024-04-10', 1, 2000);
+INSERT INTO sales VALUES (13, 13, 13, 8, DATE '2024-04-12', 1, 1200);
+INSERT INTO sales VALUES (14, 14, 14, 9, DATE '2024-04-18', 5, 300);
+INSERT INTO sales VALUES (15, 15, 15, 10, DATE '2024-04-25', 2, 200);
+
+INSERT INTO sales VALUES (16, 16, 16, 1, DATE '2024-05-05', 1, 42000);
+INSERT INTO sales VALUES (17, 17, 17, 2, DATE '2024-05-08', 1, 2000);
+INSERT INTO sales VALUES (18, 18, 18, 3, DATE '2024-05-10', 1, 8000);
+INSERT INTO sales VALUES (19, 19, 19, 4, DATE '2024-05-14', 1, 20000);
+INSERT INTO sales VALUES (20, 20, 20, 5, DATE '2024-05-20', 1, 700);
+
+INSERT INTO sales VALUES (21, 21, 21, 6, DATE '2024-06-02', 1, 2500);
+INSERT INTO sales VALUES (22, 22, 22, 7, DATE '2024-06-10', 1, 900);
+INSERT INTO sales VALUES (23, 23, 23, 8, DATE '2024-06-12', 1, 1800);
+INSERT INTO sales VALUES (24, 24, 24, 9, DATE '2024-06-22', 1, 1500);
+INSERT INTO sales VALUES (25, 25, 25, 10, DATE '2024-06-25', 1, 7000);
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
